@@ -18,16 +18,29 @@ const countModifier = (state = 0, action) => {
 //Reducer is a function that modifies data
 // action is the way of we communicate with the modifier
 
+//Subscribe allows us to listen in changes in store
+
 
 const countStore  = createStore(countModifier);
 
-plus.addEventListener('click',() => {
-  countStore.dispatch({type: 'ADD'});
-})
 
-minus.addEventListener('click', () => {
+const onChange = () => {
+  number.innerText = countStore.getState();
+}
+
+countStore.subscribe(onChange);
+
+const handleAdd = () => {
+  countStore.dispatch({type: 'ADD'});
+}
+
+const handleMinus = () => {
   countStore.dispatch({type: 'MINUS'});
-})
+}
+
+plus.addEventListener('click',handleAdd);
+
+minus.addEventListener('click', handleMinus);
 
 
 // console.log(countStore.getState());

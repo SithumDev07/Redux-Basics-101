@@ -6,20 +6,15 @@ const plus = document.getElementById('add')
 const minus = document.getElementById('minus')
 const number = document.querySelector('span')
 
-const reducer = () => {
-  // is a function that modifies our data  
-
-}
-
-const countModifier =  (state) => {
+const countModifier = (state = 0) => {
   return state;
 }
+//Reducer is a function that modifies data
 
 
-// const store = createStore(countModifier);
-const countStore = createStore(countModifier);
+const countStore  = createStore(countModifier);
 
-console.log(countStore.getState());;
+console.log(countStore.getState());
 
 // let count = 0;
 // number.innerText = count;

@@ -1,64 +1,43 @@
 import { createStore } from "redux";
 
-// we are going to store data in store
 
-const plus = document.getElementById('add')
-const minus = document.getElementById('minus')
-const number = document.querySelector('span')
+const form = document.querySelector('form');
+const input = document.querySelector('input');
+const ul = document.querySelector('ul');
 
-const countModifier = (state = 0, action) => {
-  if(action.type === 'ADD') {
-    return state + 1;
-  } else if(action.type === 'MINUS') {
-    return state -1;
-  } else {
-    return state;
+const ADD_TODO = 'ADD_TODO';
+const DELETE_TODO = 'DELETE_TODO';
+
+//Never mutate State
+
+const reducer = (state = [], action) => {
+  switch(action.type) {
+    case ADD_TODO:
+      return [...state, {text: action.text}];
+    case DELETE_TODO:
+      return [];
+    default:
+      return state;
   }
-}
-//Reducer is a function that modifies data
-// action is the way of we communicate with the modifier
+};
 
-//Subscribe allows us to listen in changes in store
+const store = createStore(reducer);
 
+store.subscribe( () => {
+  console.log(store.getState());
+} );
 
-const countStore  = createStore(countModifier);
-
-
-const onChange = () => {
-  number.innerText = countStore.getState();
-}
-
-countStore.subscribe(onChange);
-
-const handleAdd = () => {
-  countStore.dispatch({type: 'ADD'});
-}
-
-const handleMinus = () => {
-  countStore.dispatch({type: 'MINUS'});
-}
-
-plus.addEventListener('click',handleAdd);
-
-minus.addEventListener('click', handleMinus);
-
-
-// console.log(countStore.getState());
-
-// let count = 0;
-// number.innerText = count;
-
-// const updateText =  () => {
-//   number.innerText = count;
+// const createTodo = todo => {
+//   const li = document.createElement('li');
+//   li.innerText = todo;
+//   ul.appendChild(li);
 // }
 
-// const handleAdd = () => {
-//   console.log("add");
-//   count++;
-//   updateText();
-// }
+const onSubmit = e => {
+  e.preventDefault();
+  const toDo = input.value;
+  input.value = '';
+  store.dispatch({ type: ADD_TODO, text: toDo });
+}
 
-// const handleMinus = () => {
-//   count--;
-//   updateText();
-// }
+form.addEventListener('submit', onSubmit);

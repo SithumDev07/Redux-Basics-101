@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import Todo from '../components/ToDo';
 import { actionCreators } from '../store';
 
 function Home({ toDos, addTodo }) {
@@ -22,7 +23,7 @@ function Home({ toDos, addTodo }) {
                 <button>Add</button>
             </form>
             <ul>
-                {JSON.stringify(toDos) }
+                {toDos.map(toDo => (<Todo {...toDo} key={toDo.id} />))}
             </ul>
         </>
     )

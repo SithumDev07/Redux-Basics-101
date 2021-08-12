@@ -15,7 +15,7 @@ function mapStateToProps(state, ownProps) {
     const { match: {
         params: { id }
     }} = ownProps;
-    // console.log(id);
+    console.log(id);
     return {toDo: state.find(toDo => toDo.id === parseInt(id))};
 }
 
